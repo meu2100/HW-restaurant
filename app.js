@@ -2,6 +2,8 @@ const express = require('express')
 const { engine } = require('express-handlebars')
 const app = express() 
 const port = 3000
+const restaurants = require('./public/jsons/restaurant.json').results
+const BASE_IMG_URL = 'https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/'
 
 app.engine('.hbs', engine({ extname: '.hbs' }))
 app.set('view engine', '.hbs')
@@ -15,7 +17,7 @@ app.get('/', (req, res) => {
 
 
 app.get('/restaurants', (req, res) => {
-  res.render('index')
+  res.render('index', { restaurants, BASE_IMG_URL })
 })
 
 app.get('/restaurant/:id', (req, res) => {
