@@ -3,7 +3,17 @@ const app = express()
 const port = 3000
 
 app.get('/', (req, res) => {
-  res.send('express app for HW-restaurant')
+  res.redirect('/restaurants')
+})
+
+
+app.get('/restaurants', (req, res) => {
+  res.send('restaurant-list')
+})
+
+app.get('/restaurant/:id', (req, res) => {
+  const id = req.params.id
+  res.send(`ID of restaurant: ${id}`)
 })
 
 app.listen(port, () => {
