@@ -22,7 +22,8 @@ app.get('/restaurants', (req, res) => {
 
 app.get('/restaurant/:id', (req, res) => {
   const id = req.params.id
-  res.send(`ID of restaurant: ${id}`)
+  const restaurant = restaurants.find((re) => re.id.toString() === id)
+  res.render('detail', { restaurant, BASE_IMG_URL })
 })
 
 app.listen(port, () => {
