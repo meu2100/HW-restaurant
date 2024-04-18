@@ -20,7 +20,20 @@ app.get('/restaurants', (req, res) => {
   res.render('index', { restaurants, BASE_IMG_URL })
 })
 
-app.get('/restaurant/:id', (req, res) => {
+app.get('/search', (req, res) => {
+  const keyword = req.query.keyword?.trim()
+  const matchedRestaurants = keyword ? restaurants.filter((re) =>
+    Object.values(re).some((property) => {
+      if (typeof property === 'string') {
+        return property.toLowerCase().includes(keyword.toLowerCase())
+      }
+      return false
+    })
+  ) : restaurants
+  res.render('index', { restaurants: matchedRestaurants, BASE_IMG_URL, keyword })
+})
+
+app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
   const restaurant = restaurants.find((re) => re.id.toString() === id)
   res.render('detail', { restaurant, BASE_IMG_URL })
